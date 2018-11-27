@@ -1,0 +1,13 @@
+/node_modules
+
+/build/contracts/*
+/local-chain-data/*
+
+/dev-app/node_modules
+/dev-app/contract-data/*
+
+/dapp/node_modules
+
+.vscode
+
+.env
