@@ -4,7 +4,6 @@ import {web3, account} from './components/Web3Instance'
 import ContractTools from './components/ContractTools'
 import ArtifactInput from './components/ArtifactInput'
 import 'bulma/css/bulma.css'
-import '@fortawesome/fontawesome-free/css/all.css'
 
 class App extends Component {
 
