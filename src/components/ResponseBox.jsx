@@ -23,23 +23,19 @@ class ResponseBox extends Component {
         let responseState = ''
 
         if(this.state.response.success){
-            responseState = 'success'
+            responseState = 'is-success'
         }else{
-            responseState = 'error'
+            responseState = 'is-warning'
         }
 
         if(this.state.response.pending) {
-            responseState = 'pending'
+            responseState = 'is-info'
         }
 
         return(
-            <div className='response-box'>
-                <div className={`response ${responseState}`}>
-                    <span className='header'>{`${this.state.response.header}`}</span> {JSON.stringify(this.state.response.message)}
-                </div>
-                <div className='close' onClick={() => this.close()}>
-                    🗙
-                </div>
+            <div className={`notification ${responseState}`}>
+                <button className='delete' onClick={() => this.close()}></button>
+                <strong>{`${this.state.response.header}`}</strong> {JSON.stringify(this.state.response.message)}
             </div>
         )
     }

@@ -4,7 +4,6 @@ import {web3, account} from './components/Web3Instance'
 import ContractTools from './components/ContractTools'
 import ArtifactInput from './components/ArtifactInput'
 import 'bulma/css/bulma.css'
-import './App.css'
 import '@fortawesome/fontawesome-free/css/all.css'
 
 class App extends Component {
@@ -50,7 +49,7 @@ class App extends Component {
   handleFileChange = (e) => {
     let file = e.target.files[0]
 
-    let updatedTabs = this.state.tabs.concat([{ name:file.name, tab:<ContractTools />  }])
+    let updatedTabs = this.state.tabs.concat([{ name:file.name, tab:<ContractTools contract={file.name.replace('.json','')} />  }])
     this.setState({
       tabs:updatedTabs
     })
@@ -72,20 +71,31 @@ class App extends Component {
       let className = ((i === curTab) ? 'is-active' : '')
 
       return(
-        <li key={i} className={className} onClick={() => this.setCurTab(i)}><a>{val.name.split('.')}</a></li>
+        <li key={i} className={className} onClick={() => this.setCurTab(i)}><a>{val.name.replace('.json','')}</a></li>
       )
     })
 
     return (
       <div className='App'>
-        <header className='App-header section'>
-          <Web3Info
-            onClick = { () => this.updateWeb3() }
-            account = { this.state.account } 
-            balance = { this.state.balance }
-            block = { this.state.block }
-          />
-        </header>
+        <section className='hero is-dark'>
+          <div className='hero-body'>
+            <div className='container'>
+              <h1 className='title'>
+                Artificer
+              </h1>
+              <h2 className='subtitle'>
+                interact with smart contracts <br />via Truffle artifacts
+              </h2>
+              
+              <Web3Info
+                onClick = { () => this.updateWeb3() }
+                account = { this.state.account } 
+                balance = { this.state.balance }
+                block = { this.state.block }
+              />
+            </div>
+          </div>
+        </section>
         <div className='section'>
           <div className='container'>
             <div className='tabs'>

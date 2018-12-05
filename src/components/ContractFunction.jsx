@@ -72,7 +72,7 @@ class ContractFunction extends Component {
                         {this.props.name} - {this.props.mutability}
                     </div>
                     {inputs}
-                    <button onClick={() => this.submit()}>go</button>
+                    <button className='button is-info is-outlined is-small' onClick={() => this.submit()}>go</button>
                 </div>
                 {this.state.response.div()}
             </div>

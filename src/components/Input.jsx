@@ -53,7 +53,7 @@ class Input extends Component {
             inputDesc = <div className="input-desc">{this.state.description}</div>
         }
         return(
-            <div className={'input'}>
+            <div className={'input-item'}>
                 {inputDesc}
                 <input className={`${defaultContent}`}
                     value={this.state.content}
