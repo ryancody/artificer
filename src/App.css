@@ -1,0 +1,71 @@
+.App {
+  text-align: center; }
+
+.App-header {
+  background-color: #1f1f1f;
+  display: grid;
+  font-size: calc(10px + 2vmin);
+  color: white; }
+
+.App-link {
+  color: #61dafb; }
+
+.tool-switch-button {
+  display: inline-block;
+  padding: .2em;
+  cursor: pointer; }
+
+.tool-switch-button:hover {
+  font-weight: bold; }
+
+.tool-switch-button.selected {
+  font-weight: bold; }
+
+.web3Info {
+  cursor: pointer;
+  color: black; }
+
+.contract-tools {
+  padding: 1em; }
+
+.contract-function {
+  display: grid;
+  grid-template-areas: 'function-box response-box';
+  text-align: left;
+  padding: 1em; }
+  .contract-function .function-box {
+    grid-area: function-box; }
+  .contract-function .response-box {
+    grid-area: response-box; }
+  .contract-function .function-name {
+    font-weight: bold; }
+  .contract-function button {
+    display: block; }
+  .contract-function .input .input-desc {
+    display: inline-block;
+    padding: 0em .2em 0em 0em; }
+  .contract-function .input input {
+    display: inline-block; }
+  .contract-function .input input.default {
+    color: grey; }
+  .contract-function .response {
+    display: inline-block;
+    border-radius: .5em;
+    padding: .2em; }
+    .contract-function .response .header {
+      font-weight: bold; }
+  .contract-function .response.success {
+    border: green 2px solid;
+    color: green;
+    background-color: rgba(21, 107, 13, 0.336); }
+  .contract-function .response.error {
+    border: red 2px solid;
+    color: red;
+    background-color: rgba(107, 13, 36, 0.336); }
+  .contract-function .response.pending {
+    border: blue 2px solid;
+    color: blue;
+    background-color: rgba(13, 51, 107, 0.336); }
+  .contract-function .close {
+    display: inline-block;
+    cursor: pointer; }
