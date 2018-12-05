@@ -1,30 +1,30 @@
-import React, { Component } from 'react';
-import './App.css';
+import React, { Component } from 'react'
 import Web3Info from './components/Web3Info'
 import {web3, account} from './components/Web3Instance'
-import ToolSwitch from './components/ToolSwitch';
-import ContractTools from './components/ContractTools';
+import ContractTools from './components/ContractTools'
+import ArtifactInput from './components/ArtifactInput'
+import 'bulma/css/bulma.css'
+import './App.css'
+import '@fortawesome/fontawesome-free/css/all.css'
 
 class App extends Component {
 
   constructor(props) {
     super(props)
 
-    let tools = [
+    let tabs = [
       {
-        "id":1,
-        "label":"policy manager",
-        "block":<ContractTools key={1} contract="PolicyManager" />
+        name:'Upload',
+        tab:<ArtifactInput handleFileChange={this.handleFileChange} />
       }
     ]
 
     this.state = {
+      curTab:0,
+      tabs:tabs,
       account:'',
-      block:0,
-      tools:tools,
-      curTool: ''
+      block:0
     }
-
     
     this.updateWeb3()
   }
@@ -47,36 +47,56 @@ class App extends Component {
     }
   }
 
-  handleToolOption(option) {
-    this.setState( Object.assign( {}, this.state, { curTool: option } ) )
+  handleFileChange = (e) => {
+    let file = e.target.files[0]
+
+    let updatedTabs = this.state.tabs.concat([{ name:file.name, tab:<ContractTools />  }])
+    this.setState({
+      tabs:updatedTabs
+    })
+  }
+
+  setCurTab(i) {
+    console.log('settin curtab to ', i)
+    this.setState({
+      curTab:i
+    })
   }
     
   render() {
+    let {tabs, curTab} = this.state
 
-    let toolbar = this.state.tools.map((val) => {
-      return <ToolSwitch
-                selected={ (val === this.state.curTool) ? true : false }
-                key = { val.id }
-                label = { val.label } 
-                onClick = { () => this.handleToolOption(val) }
-              />
+    console.log('cur tabs', tabs)
+
+    let tabList = tabs.map((val, i) => {
+      let className = ((i === curTab) ? 'is-active' : '')
+
+      return(
+        <li key={i} className={className} onClick={() => this.setCurTab(i)}><a>{val.name.split('.')}</a></li>
+      )
     })
 
     return (
-      <div className="App">
-        <header className="App-header">
-          <Web3Info 
+      <div className='App'>
+        <header className='App-header section'>
+          <Web3Info
             onClick = { () => this.updateWeb3() }
             account = { this.state.account } 
             balance = { this.state.balance }
             block = { this.state.block }
           />
         </header>
-        <div>
-          <div className="toolbar">
-            { toolbar }
+        <div className='section'>
+          <div className='container'>
+            <div className='tabs'>
+              <ul>
+                {tabList}
+              </ul>
+            </div>
+            <div className='container'>
+              {tabs[curTab].tab}
+            </div>
           </div>
-            { this.state.curTool.block }
         </div>
         <footer>
 
