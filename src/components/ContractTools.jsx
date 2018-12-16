@@ -9,8 +9,8 @@ class ContractTools extends Component {
         super(props)
 
         this.state = {
-            address: "address",
-            name: "name",
+            address: 'address',
+            name: 'name',
             contractData: null,
             contract: null,
             functions: null
@@ -71,7 +71,8 @@ class ContractTools extends Component {
 
     render () {
         return(
-            <div className = "contract-tools">
+            <div className = 'container'>
+                <button className='button is-danger'>Remove Contract</button>
                 {this.state.functions}
             </div>
         )

@@ -66,7 +66,7 @@ class ContractFunction extends Component {
         }
 
         return (
-            <div className="contract-function">
+            <div className="contract-function container">
                 <div className="function-box">                
                     <div className="function-name">
                         {this.props.name} - {this.props.mutability}

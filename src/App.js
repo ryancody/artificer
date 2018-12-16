@@ -49,7 +49,7 @@ class App extends Component {
   handleFileChange = (e) => {
     let file = e.target.files[0]
 
-    let updatedTabs = this.state.tabs.concat([{ name:file.name, tab:<ContractTools contract={file.name.replace('.json','')} />  }])
+    let updatedTabs = this.state.tabs.concat([{ name:file.name, tab:<ContractTools key={this.state.tabs.length} contract={file.name.replace('.json','')} />  }])
     this.setState({
       tabs:updatedTabs
     })
