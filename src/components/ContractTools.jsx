@@ -8,6 +8,7 @@ class ContractTools extends Component {
         super(props)
 
         this.state = {
+            id: this.props.id,
             address: 'address',
             name: 'name',
             contract: null,
@@ -16,17 +17,24 @@ class ContractTools extends Component {
     }
 
     componentDidMount () {
-        if(!this.state.contract) {
-            console.log('no contract')
-
-            this.setState({
-                contract: this.props.contract,
-                functions: this.SetupFunctions()
-            })
-        }
+        this.Setup()
     }
 
-    SetupFunctions() {
+    async Setup() {
+        await this.GetDeployedContract()
+        await this.SetupFunctions()
+    }
+
+    async GetDeployedContract () {
+        let contract = await new web3.eth.Contract(this.props.contract.abi)
+        let networkID = await web3.eth.net.getId()
+
+        contract.options.address = this.props.contract.networks[networkID].address
+        
+        this.setState({contract:contract})
+    }
+
+    async SetupFunctions () {
         let functions = ''
         let key = 0
         
@@ -39,29 +47,25 @@ class ContractTools extends Component {
                 return null
             }else {
                 return(
-                <ContractFunction key={key++} 
-                    name={i.name} 
-                    inputs={i.inputs} 
-                    mutability={i.stateMutability}
-                    contract={this.state.contract}
+                <ContractFunction key={ key++ } 
+                    name={ i.name } 
+                    inputs={ i.inputs } 
+                    mutability={ i.stateMutability }
+                    contract= { this.state.contract }
                 />
                 )
             }
         })
         
-        return functions
+        this.setState({functions:functions})
     }
 
     render () {
         
-        if(this.state.contract) {
-            console.log('contract',this.state.contract)
-        }
-
         return(
             <div className = 'container'>
                 {this.state.functions}
-                <button className='button is-danger'>Remove Contract</button>
+                {/*<button className='button is-danger' onClick={() => this.props.handleRemove(this.state.id)}>Remove Contract</button>*/}
             </div>
         )
     }

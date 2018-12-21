@@ -62,13 +62,17 @@ class App extends Component {
   }
 
   updateTabs = (contractData) => {
-    let updatedTabs = this.state.tabs.concat([{ 
-      name:contractData.contractName, 
-      tab:<ContractTools 
-          key={this.state.tabs.length} 
-          contract={contractData}
-        />  
-    }])
+    let updatedTabs = this.state.tabs.concat([
+      { 
+        name:contractData.contractName, 
+        tab:<ContractTools 
+            key={this.state.tabs.length}
+            id={this.state.tabs.length}
+            contract={contractData}
+            handleRemove={this.handleRemove}
+          />  
+      }
+    ])
     
     this.setState({
       tabs:updatedTabs
@@ -80,6 +84,17 @@ class App extends Component {
     this.setState({
       curTab:i
     })
+  }
+
+  handleRemove = (i) => {
+
+    // remove a tab by setting the tabs state to be 
+    // a version of the tabs state filtered for the tab's id
+    this.setState(
+      {
+        curTab: 0,
+        tabs: this.state.tabs.filter( tab => tab.id === i )
+      })
   }
     
   render() {
