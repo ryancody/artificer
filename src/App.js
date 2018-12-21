@@ -3,10 +3,8 @@ import Web3Info from './components/Web3Info'
 import {web3, account} from './components/Web3Instance'
 import ContractTools from './components/ContractTools'
 import ArtifactInput from './components/ArtifactInput'
-import util from 'util'
 import 'bulma/css/bulma.css'
 import '@fortawesome/fontawesome-free/css/all.css'
-import { read, readFile } from 'fs';
 
 class App extends Component {
 
@@ -112,19 +110,30 @@ class App extends Component {
         <section className='hero is-dark'>
           <div className='hero-body'>
             <div className='container'>
-              <h1 className='title'>
-                Artificer
-              </h1>
-              <h2 className='subtitle'>
-                interact with smart contracts <br />via Truffle artifacts
-              </h2>
-              
-              <Web3Info
-                onClick = { () => this.updateWeb3() }
-                account = { this.state.account } 
-                balance = { this.state.balance }
-                block = { this.state.block }
-              />
+              <div className='columns'>
+                <div className='column is-half'>
+                  <h1 className='title'>
+                    Artificer
+                  </h1>
+                  <h2 className='subtitle'>
+                    interact with smart contracts <br />via Truffle artifacts
+                  </h2>
+                  
+                  <Web3Info
+                    onClick = { () => this.updateWeb3() }
+                    account = { this.state.account } 
+                    balance = { this.state.balance }
+                    block = { this.state.block }
+                  />
+                </div>
+                <div className='column is-half'>
+                  <div className='level'>
+                    <p className='level-left'><strong>Dont have any artifacts?</strong></p>
+                    <p>Use this sample file and connect to Ropsten</p>
+                    <button className='button is-info level-right'>demo.json</button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
