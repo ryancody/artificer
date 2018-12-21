@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.5.0",
     "bulma": "^0.7.2",
+    "fs": "0.0.1-security",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
     "react-scripts": "2.0.5",
-    "@fortawesome/fontawesome-free": "^5.5.0",
     "web3": "^1.0.0-beta.36"
   },
   "scripts": {

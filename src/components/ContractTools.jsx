@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import {web3} from './Web3Instance'
-import GetContractData from './GetContractData'
 import ContractFunction from './ContractFunction'
 
 class ContractTools extends Component {
@@ -11,44 +10,27 @@ class ContractTools extends Component {
         this.state = {
             address: 'address',
             name: 'name',
-            contractData: null,
             contract: null,
             functions: null
         }
-
-        this.Setup()
     }
 
-    async Setup(){
+    componentDidMount () {
+        if(!this.state.contract) {
+            console.log('no contract')
 
-        try{
-            let contractData = await this.SetupContract(this.props.contract)
-            this.SetupFunctions(contractData)
-        }catch(e){
-            console.log('failed to set up contract data', e)
+            this.setState({
+                contract: this.props.contract,
+                functions: this.SetupFunctions()
+            })
         }
     }
 
-    async SetupContract(name) {
-        let contractData = GetContractData(name)
-        let contract = await new web3.eth.Contract(contractData.abi)
-        let networkID = await web3.eth.net.getId()
-
-        contract.options.address = contractData.networks[networkID].address
-
-        this.setState({
-            contractData: contractData,
-            contract: contract
-        })
-
-        return contractData
-    }
-
-    SetupFunctions(contractData) {
+    SetupFunctions() {
         let functions = ''
-        
         let key = 0
-        functions = contractData.abi.map((i) => {
+        
+        functions = this.props.contract.abi.map((i) => {
             if(!i.name || i.name === ''){
                 console.log('skipping private function')
                 return null
@@ -66,14 +48,20 @@ class ContractTools extends Component {
                 )
             }
         })
-        this.setState({functions:functions})
+        
+        return functions
     }
 
     render () {
+        
+        if(this.state.contract) {
+            console.log('contract',this.state.contract)
+        }
+
         return(
             <div className = 'container'>
-                <button className='button is-danger'>Remove Contract</button>
                 {this.state.functions}
+                <button className='button is-danger'>Remove Contract</button>
             </div>
         )
     }

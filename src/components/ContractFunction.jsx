@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import Input from './Input'
-import {account} from './Web3Instance'
 import Response from './Response.js'
 import Interact from './Interact'
 
@@ -66,15 +65,14 @@ class ContractFunction extends Component {
         }
 
         return (
-            <div className="contract-function container">
-                <div className="function-box">                
-                    <div className="function-name">
-                        {this.props.name} - {this.props.mutability}
-                    </div>
+            <div className="card">
+                <div className="card-content">
+                    {this.props.name} - {this.props.mutability}
                     {inputs}
                     <button className='button is-info is-outlined is-small' onClick={() => this.submit()}>go</button>
+                
+                    {this.state.response.div()}
                 </div>
-                {this.state.response.div()}
             </div>
         )
     }

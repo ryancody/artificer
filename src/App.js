@@ -3,8 +3,10 @@ import Web3Info from './components/Web3Info'
 import {web3, account} from './components/Web3Instance'
 import ContractTools from './components/ContractTools'
 import ArtifactInput from './components/ArtifactInput'
+import util from 'util'
 import 'bulma/css/bulma.css'
 import '@fortawesome/fontawesome-free/css/all.css'
+import { read, readFile } from 'fs';
 
 class App extends Component {
 
@@ -48,15 +50,33 @@ class App extends Component {
 
   handleFileChange = (e) => {
     let file = e.target.files[0]
+    let fr = new FileReader()
 
-    let updatedTabs = this.state.tabs.concat([{ name:file.name, tab:<ContractTools key={this.state.tabs.length} contract={file.name.replace('.json','')} />  }])
+    fr.onloadend = this.onLoadCallback
+    fr.readAsText(file)
+  }
+
+  onLoadCallback = (e) => {
+
+    this.updateTabs( JSON.parse(e.target.result) )
+  }
+
+  updateTabs = (contractData) => {
+    let updatedTabs = this.state.tabs.concat([{ 
+      name:contractData.contractName, 
+      tab:<ContractTools 
+          key={this.state.tabs.length} 
+          contract={contractData}
+        />  
+    }])
+    
     this.setState({
       tabs:updatedTabs
     })
   }
 
   setCurTab(i) {
-    console.log('settin curtab to ', i)
+
     this.setState({
       curTab:i
     })
@@ -64,14 +84,11 @@ class App extends Component {
     
   render() {
     let {tabs, curTab} = this.state
-
-    console.log('cur tabs', tabs)
-
     let tabList = tabs.map((val, i) => {
       let className = ((i === curTab) ? 'is-active' : '')
 
       return(
-        <li key={i} className={className} onClick={() => this.setCurTab(i)}><a>{val.name.replace('.json','')}</a></li>
+        <li key={i} className={className} onClick={() => this.setCurTab(i)}><a>{val.name}</a></li>
       )
     })
 
