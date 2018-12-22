@@ -5,6 +5,8 @@
 
 # testing
 /coverage
+truffle-config.js
+.secret
 
 # production
 /build

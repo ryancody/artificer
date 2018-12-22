@@ -3,6 +3,7 @@ import Web3Info from './components/Web3Info'
 import {web3, account} from './components/Web3Instance'
 import ContractTools from './components/ContractTools'
 import ArtifactInput from './components/ArtifactInput'
+import Card from './components/Card'
 import 'bulma/css/bulma.css'
 import '@fortawesome/fontawesome-free/css/all.css'
 
@@ -14,7 +15,9 @@ class App extends Component {
     let tabs = [
       {
         name:'Upload',
-        tab:<ArtifactInput handleFileChange={this.handleFileChange} />
+        tab:<div className='tile is-3'>
+          <ArtifactInput handleFileChange={this.handleFileChange} />
+        </div>
       }
     ]
 
@@ -28,6 +31,8 @@ class App extends Component {
     this.updateWeb3()
   }
 
+  // TODO: move this to web3info component!
+  // web3info needs to be its own widget
   async updateWeb3 () {
     let block
     let balance
@@ -105,6 +110,16 @@ class App extends Component {
       )
     })
 
+    let cards = tabs.map((val, i) => {
+      if(i > 0 && this.state.curTab === 0){
+        return(
+          <div key={i} className='tile is-3'>
+            <Card name={val.name} />
+          </div>
+        )
+      }
+    })
+
     return (
       <div className='App'>
         <section className='hero is-dark'>
@@ -130,7 +145,9 @@ class App extends Component {
                   <div className='level'>
                     <p className='level-left'><strong>Dont have any artifacts?</strong></p>
                     <p>Use this sample file and connect to Ropsten</p>
-                    <button className='button is-info level-right'>demo.json</button>
+                    <a href={'./assets/Demo.json'} download>
+                      <button className='button is-info level-right'>Demo.json</button>
+                    </a>
                   </div>
                 </div>
               </div>
@@ -145,7 +162,10 @@ class App extends Component {
               </ul>
             </div>
             <div className='container'>
-              {tabs[curTab].tab}
+              <div className='tile is-ancestor'>
+                {tabs[curTab].tab}
+                {cards}
+              </div>
             </div>
           </div>
         </div>
