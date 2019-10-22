@@ -106,7 +106,7 @@ class App extends Component {
       let className = ((i === curTab) ? 'is-active' : '')
 
       return (
-        <li key={i} className={className} onClick={() => this.setCurTab(i)}><a>{val.name}</a></li>
+        <li key={i} className={className} onClick={() => this.setCurTab(i)}>{val.name}</li>
       )
     })
 
@@ -117,7 +117,7 @@ class App extends Component {
             <Card name={val.name} />
           </div>
         )
-      }
+      } else {return null}
     })
 
     return (
