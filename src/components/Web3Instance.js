@@ -1,35 +1,36 @@
 import Web3 from 'web3'
 
 export let web3 = new Web3(window.web3.currentProvider || "http://localhost:8545")
-export let account = '0x0000000000000000000000000000000000000000'
-export let isLoggedIn = false
+export let account = null
 
-console.log('using web3 verison', web3.version)
+console.log('using web3 version', web3.version)
 
-async function GetDefaultAccount() {
-  let accounts = await web3.eth.getAccounts()
-
-  if(accounts){
-    account = accounts[0]
-    console.log('default account is now', account)
+export async function GetDefaultAccount() {
+  if(account) {
+    return account
   }
+
+  account = await web3.eth.getAccounts()
+  console.log('returned',account)
+  account = account[0]
+  console.log('default account is now', account)
+  return account
 }
 
-GetDefaultAccount()
+window.addEventListener('load', async () => {
 
-async function checkLogIn(){
-  web3.eth.getAccounts(function(err, accounts){
-    if (err != null) {
-      console.error('error', err)
-      isLoggedIn = false
-    } else if (accounts.length == 0){
-      console.log("User is not logged in to MetaMask")
-      isLoggedIn = false
-    } else {
-      console.log("User is logged in to MetaMask")
-      isLoggedIn = true
+  if(window.ethereum) {
+    
+    window.web3 = new Web3(window.web3.currentProvider);
+    try {
+        // Request account access if needed
+        await window.ethereum.enable();
+        // Acccounts now exposed
+
+        await GetDefaultAccount()
+    } catch (error) {
+        // User denied account access...
+        console.error(error)
     }
-  })
-}
-
-checkLogIn()
+  }
+})
